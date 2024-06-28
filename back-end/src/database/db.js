@@ -7,7 +7,7 @@ const conn = async () =>{
 
         // const dbconn = await mongoose.connect(`mongodb:${dbUser}@${dbPassword}//localhost:27017/`)
 
-        const dbconn = await mongoose.connect(`mongodb://localhost:27017/`)
+        const dbconn = await mongoose.connect(`mongodb://localhost:27017/images_feed`)
 
         return dbconn
     }catch(e){
