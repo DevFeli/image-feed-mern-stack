@@ -1,5 +1,5 @@
 back-end/node_modules
 front-end/node_modules
 
-back-end/.dotenv
-front-end/.dotenv
+back-end/.env
+front-end/.env
