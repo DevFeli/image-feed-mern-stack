@@ -1,9 +1,9 @@
-import User from "../models/User";
-import jwt  from 'jsonwebtoken';
+import User from "../models/User.js";
+import jwt from 'jsonwebtoken';
 
 const jwtSecret = process.env.SECRET
 
-const authGuard = async (req, res) => {
+const authGuard = async (req, res, next) => {
 
     const authHeader = req.headers["authorization"]
     const token = authHeader && authHeader.split(" ")[1]
@@ -24,3 +24,6 @@ const authGuard = async (req, res) => {
         res.status(401).json({errors:["Token inválido."]})
     }
 }
+
+export default authGuard
+
