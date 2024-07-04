@@ -131,3 +131,33 @@ export const likePhoto = async (req, res) => {
         return res.status(404).json({errors:["Foto não encontada."]})
     }
 }
+
+export const commentPhoto = async (req, res) => {
+
+    const { id } = req.params
+    const { comment } = req.body
+    
+    const reqUser = req.user
+
+    try{
+
+        const user = await User.findById(reqUser._id)
+
+        const photo = await Photo.findById(id)
+
+        const userComment = {
+            comment,
+            userName:user.name,
+            userImage:user.profileImage,
+            userId:user._id
+        }
+
+        photo.comments.push(userComment)
+
+        await photo.save()
+
+        return res.status(201).json({comment:userComment, message:"O comentário foi adicionado com sucesso."})
+    }catch(error){
+        return res.status(404).json({errors:["Foto não encontada."]})
+    }
+}
