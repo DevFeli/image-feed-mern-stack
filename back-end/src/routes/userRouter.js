@@ -1,5 +1,5 @@
 import express from 'express'
-import { register, login, getCurrentUser, update } from "../controllers/UserController.js";
+import { register, login, getCurrentUser, update, getUserById } from "../controllers/UserController.js";
 
 //middlewares
 import handleValidations from "../middlewares/handleValidations.js"
@@ -16,6 +16,8 @@ userRouter.post('/login', loginValidation(), handleValidations, login)
 userRouter.get("/profile", authGuard, getCurrentUser)
 
 userRouter.put("/", authGuard, userUpdateValidation(), imageUpload.single("profileImage"), update)
+
+userRouter.get("/:id", getUserById)
 
 export default userRouter
 
