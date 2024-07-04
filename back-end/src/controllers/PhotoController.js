@@ -39,7 +39,7 @@ export const deletePhoto = async (req, res) => {
             res.status(422).json({errors:["Ocorreu um erro, tente novamente mais tarde."]})
             return
         }
-        
+
         await Photo.findByIdAndDelete(photo._id)
         
         res.status(200).json({id:photo._id, message:"Foto excluída com sucesso."})
@@ -47,4 +47,11 @@ export const deletePhoto = async (req, res) => {
     }catch(error){
         res.status(404).json({erros:["Foto não encontrada."]})
     }
+}
+
+export const allPhotos = async (req, res) => {
+
+    const photos = await Photo.find({}).sort([["createdAt", -1]]).exec()
+
+    return res.status(200).json(photos)
 }
