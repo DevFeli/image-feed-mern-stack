@@ -5,7 +5,7 @@ import authGuard from '../middlewares/authGuard.js';
 import validate from '../middlewares/handleValidations.js';
 import { imageUpload } from '../middlewares/imageUpload.js'
 
-import { allPhotos, deletePhoto, insertPhoto } from './../controllers/PhotoController.js';
+import { allPhotos, deletePhoto, getPhotoById, insertPhoto } from './../controllers/PhotoController.js';
 
 const photoRouter = Router()
 
@@ -14,5 +14,9 @@ photoRouter.post("/", authGuard, imageUpload.single("image"), photoInsertValidat
 photoRouter.delete("/:id", authGuard, deletePhoto)
 
 photoRouter.get("/", authGuard, allPhotos)
+
+photoRouter.get("/user/:id", authGuard, allPhotos)
+
+photoRouter.get("/:id", authGuard, getPhotoById)
 
 export default photoRouter

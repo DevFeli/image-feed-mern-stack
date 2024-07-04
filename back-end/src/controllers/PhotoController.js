@@ -55,3 +55,26 @@ export const allPhotos = async (req, res) => {
 
     return res.status(200).json(photos)
 }
+
+export const getUserPhotos = async (req, res) => {
+
+    const { id } = req.params
+
+    const photos = await Photo.find({userId:id}).sort([["createdAt", -1]]).exec()
+
+    return res.status(200).json(photos)
+}
+
+export const getPhotoById = async (req, res) => {
+
+    const { id } = req.params
+
+    try{
+
+        const photo = await Photo.findById(id)
+
+        return res.status(200).json(photo)
+    }catch(error){
+        return res.status(404).json({errors:["Foto não encontada."]})
+    }
+}
