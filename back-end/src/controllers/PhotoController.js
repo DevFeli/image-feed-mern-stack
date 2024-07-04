@@ -103,3 +103,31 @@ export const updatePhoto = async (req, res) => {
         return res.status(404).json({errors:["Foto não encontada."]})
     }
 }
+
+export const likePhoto = async (req, res) => {
+
+    const { id } = req.params
+    
+    const reqUser = req.user
+
+    try{
+
+        const photo = await Photo.findById(id)
+
+        if(!photo.userId.equals(reqUser._id)){
+            return res.status(404).json({errors:["Ocorreu um erro, por favor tente novamente mais tarde."]})
+        }
+
+        if(photo.likes.includes(reqUser._id)){
+            return res.status(422).json({errors:"Você já curtiu a foto."})
+        }
+
+        photo.likes.push(reqUser._id)
+
+        photo.save()
+
+        return res.status(200).json({photoId:id, userId:reqUser._id, message:"A foto foi curtida."})
+    }catch(error){
+        return res.status(404).json({errors:["Foto não encontada."]})
+    }
+}
