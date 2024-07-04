@@ -78,3 +78,28 @@ export const getPhotoById = async (req, res) => {
         return res.status(404).json({errors:["Foto não encontada."]})
     }
 }
+
+export const updatePhoto = async (req, res) => {
+
+    const { id } = req.params
+    const { title } = req.body
+
+    const reqUser = req.user
+
+    try{
+
+        const photo = Photo.findById(id)
+
+        if(!photo.userId.equals(reqUser._id)){
+            return res.status(404).json({errors:["Ocorreu um erro, por favor tente novamente mais tarde."]})
+        }
+
+        if(title){
+            photo.title = title
+        }
+
+        return res.status(200).json({photo, message:"Foto atualizada com suecesso."})
+    }catch(error){
+        return res.status(404).json({errors:["Foto não encontada."]})
+    }
+}
