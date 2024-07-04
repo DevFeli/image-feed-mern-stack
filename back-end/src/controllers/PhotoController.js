@@ -161,3 +161,12 @@ export const commentPhoto = async (req, res) => {
         return res.status(404).json({errors:["Foto não encontada."]})
     }
 }
+
+export const searchPhotos = async (req, res) => {
+
+    const { search } = req.query 
+
+    const photos = await Photo.find({title: new RegExp(search, "i")}).exec()
+
+    return res.status(200).json(photos)
+}
