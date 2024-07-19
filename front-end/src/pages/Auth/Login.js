@@ -1,7 +1,28 @@
 import "./Auth.css"
 
+import { Link } from "react-router-dom"
+import Message from "../../components/erros/Message"
+import { useEffect, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+
 export default function Login(){
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
+
     return(
-        <div>Login</div>
+        <div id="login">
+            <h2>Imagem Feed</h2>
+            <p>Faça o login para ver o que há de novo.</p>
+            <form onSubmit={handleSubmit}>
+                <input type="text" placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} value={email || ''}/>
+                <input type="password" placeholder="Senha" onChange={(e) => setPassword(e.target.value)} value={password || ''}/>
+                <input type="submit" value="Entrar"/>
+            </form>
+            <p>Não tem uma conta? <Link to={'/register'}>Clique aqui!</Link></p>
+        </div>
     )
 }
