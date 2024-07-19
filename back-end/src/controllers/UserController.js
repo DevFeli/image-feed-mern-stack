@@ -31,7 +31,8 @@ export const register = async (req, res) => {
     }
 
     res.status(201).json({
-        token: generateToken(newUser._id)
+        token: generateToken(newUser._id),
+        id: newUser._id
     })
 }
 
