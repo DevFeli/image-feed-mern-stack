@@ -8,7 +8,7 @@ import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserDetails, resetMessage } from "../../slices/userSlice";
-import { deletePhoto, getUserPhotos, publishPhoto } from "../../slices/photoSlice"; 
+import { deletePhoto, getUserPhotos, publishPhoto, updatePhoto } from "../../slices/photoSlice"; 
 
 export default function Profile(){
 

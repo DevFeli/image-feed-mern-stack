@@ -2,17 +2,17 @@ import "./Photo.css";
 
 import { upload } from "../../utils/config";
 
-import LikeContainer from "../../components/LikeContainer";
 import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 import { getPhoto, like, comment } from "../../slices/photoSlice";
 import Message from './../../components/erros/Message';
 import PhotoItem from './../../components/photoItem/PhotoItem';
+import LikeContainer from './../../components/likeContainer/LikeContainer';
+import { useResetComponentMessage } from './../../hooks/useResetComponentMessage';
 
 export default function Photo(){
   const { id } = useParams();
