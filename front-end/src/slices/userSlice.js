@@ -11,15 +11,33 @@ const initialState = {
 }
 
 export const profile = createAsyncThunk(
-    "user/profile", 
-    async(user, thunkAPI) => {
-        const token = thunkAPI.getState().auth.user.token
-
-        const data = await userService.profile(user, token)
-
-        return data
+    "user/profile",
+    async (user, thunkAPI) => {
+      const token = thunkAPI.getState().auth.user.token;
+  
+      const data = await userService.profile(user, token);
+  
+      console.log(data);
+  
+      return data;
     }
-)
+);
+
+export const updateProfile = createAsyncThunk(
+    "user/update",
+    async (user, thunkAPI) => {
+      const token = thunkAPI.getState().auth.user.token;
+  
+      const data = await userService.updateProfile(user, token);
+  
+      // Check for errors
+      if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0]);
+      }
+  
+      return data;
+    }
+);
 
 export const userSlice = createSlice({
     name: "user",
