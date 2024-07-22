@@ -9,6 +9,7 @@ import NavBar from './components/navbar/NavBar';
 import Footer from './components/navbar/Footer';
 import { useAuth } from './hooks/useAuth';
 import EditProfile from './pages/EditProfile/EditProfile';
+import Profile from './pages/Profile/Profile';
 
 function App() {
 
@@ -26,6 +27,10 @@ function App() {
             <Routes>
               <Route path="/" element={auth ? <Home/> : <Navigate to={'/login'}/>}/>
               <Route path="/profile" element={auth ? <EditProfile/> : <Navigate to={'/login'}/>}/>
+              <Route
+                path="/users/:id"
+                element={auth ? <Profile /> : <Navigate to="/login" />}
+              />
               <Route path="/login" element={!auth ? <Login/> : <Navigate to={'/'}/>}/>
               <Route path="/register" element={!auth ? <Register/> : <Navigate to={'/'}/>}/>
             </Routes>
