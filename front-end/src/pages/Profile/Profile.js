@@ -7,7 +7,8 @@ import { Link, useParams } from "react-router-dom"
 import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserDetails } from "../../slices/userSlice";
+import { getUserDetails, resetMessage } from "../../slices/userSlice";
+import { deletePhoto, getUserPhotos, publishPhoto } from "../../slices/photoSlice"; 
 
 export default function Profile(){
 
@@ -23,8 +24,16 @@ export default function Profile(){
         message: messagePhoto,
       } = useSelector((state) => state.photo);
 
-      const newPhotoForm = useRef();
-      const editPhotoForm = useRef();
+      
+    const [title, setTitle] = useState();
+    const [image, setImage] = useState();
+    
+    const [editId, setEditId] = useState();
+    const [editImage, setEditImage] = useState();
+    const [editTitle, setEditTitle] = useState();
+      
+    const newPhotoForm = useRef();
+    const editPhotoForm = useRef();
 
     const submitHandle = (e) => {
         e.preventDefault();
@@ -50,10 +59,60 @@ export default function Profile(){
         resetComponentMessage();
     };
 
+    function resetComponentMessage() {
+        setTimeout(() => {
+          dispatch(resetMessage());
+        }, 2000);
+      }
+
     useEffect(() => {
-    dispatch(getUserDetails(id));
-    // dispatch(getUserPhotos(id));
+        dispatch(getUserDetails(id));
+        dispatch(getUserPhotos(id));
     }, [dispatch, id]);
+
+    const handleFile = (e) => {
+        const image = e.target.files[0];
+    
+        setImage(image);
+    }
+
+    const handleDelete = (id) => {
+        dispatch(deletePhoto(id));
+    
+        resetComponentMessage();
+    }
+
+    function hideOrShowForms() {
+        newPhotoForm.current.classList.toggle("hide");
+        editPhotoForm.current.classList.toggle("hide");
+    }
+
+    const handleEdit = (photo) => {
+        if (editPhotoForm.current.classList.contains("hide")) {
+          hideOrShowForms();
+        }
+    
+        setEditId(photo._id);
+        setEditImage(photo.image);
+        setEditTitle(photo.title);
+    }
+
+    const handleCancelEdit = () => {
+        hideOrShowForms();
+    }
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+    
+        const photoData = {
+          title: editTitle,
+          id: editId,
+        };
+    
+        dispatch(updatePhoto(photoData));
+    
+        resetComponentMessage();
+    }
 
     if (loading) {
     return <p>Carregando...</p>;
